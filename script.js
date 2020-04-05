@@ -33,7 +33,7 @@ for(var i = 0; i < allChoiceButtons.length; i++) {
 
         clearQuiz();
         questionNum++;
-        if(questionNum = questionSet.length) {
+        if(questionNum === questionSet.length) {
             window.location.replace("./score-sheet.html");
         }
         else {
