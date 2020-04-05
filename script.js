@@ -17,6 +17,9 @@ var highScore = parseInt(document.getElementById("high-score"));
 // Grab user score
 var userScore = document.getElementById("current-score");
 
+// Right or wrong
+var isCorrectId = document.getElementById("is-correct");
+
 var questionSet = [{q: "How many megabytes (MB) are in a gigabyte (GB)?", c: ["1024", "0", "2048", "64"], a: "1024"},
                    {q: "What characters surround a string in Javascript?", c: ["Single quotation marks", "Triple quotation marks", "No quotation marks", "Double quotation marks"], a: "Double quotation marks"},
                    {q: "When does Coding Boot Camp end?", c: ["Never", "Tomorrow", "June 8", "May 31"], a: "June 8"},
@@ -24,17 +27,17 @@ var questionSet = [{q: "How many megabytes (MB) are in a gigabyte (GB)?", c: ["1
 
 for(var i = 0; i < allChoiceButtons.length; i++) {
     allChoiceButtons[i].addEventListener("click", function() {
-        userChoice = this.text;
+        userChoice = this.innerHTML;
         compareAnswer(userChoice, correctAnswer);
         buttonPressed = true;
 
         clearQuiz();
         questionNum++;
-        if(questionNum < questionSet.length) {
-            renderQuiz();
+        if(questionNum = questionSet.length) {
+            window.location.replace("./score-sheet.html");
         }
         else {
-            window.location.replace("./score-sheet.html");
+            renderQuiz();
         }
     });
 }
@@ -43,7 +46,6 @@ function renderQuiz() {
     // Render current question
     questionScreen.innerHTML = (questionNum + 1) + ". " + questionSet[questionNum].q;
     console.log(questionSet[questionNum].q);
-    questionScreen.append(questionSet[questionNum].q);
 
     userScore.innerHTML = score;
     console.log(userScore.innerHTML);
@@ -52,9 +54,12 @@ function renderQuiz() {
 
     // Render current choices
     for(var i = 0; i < questionSet[0].c.length; i++) {
-        allChoiceButtons[i].text = questionSet[questionNum].c[i];
+        allChoiceButtons[i].innerHTML = questionSet[questionNum].c[i];
         console.log(allChoiceButtons[i].text);
-        allChoiceButtons[i].append(allChoiceButtons[i].text);
+    }
+
+    if(isCorrectId.innerHTML !== "") {
+        setTimeout(function(){isCorrectId.innerHTML = "";}, 1500);
     }
 }
 
@@ -67,10 +72,8 @@ function clearQuiz() {
     // Clear choices for the next choices
     for(var i = 0; i < questionSet[0].c.length; i++) {
         allChoiceButtons[i].innerHTML = "";
-        allChoiceButtons[i].append(allChoiceButtons[i].innerHTML);
     }
 
-    // Clear the user's choice for next question
     userChoice;
 
     buttonPressed = false;
@@ -81,9 +84,11 @@ function compareAnswer(choice, correctAnswer) {
     if(choice === correctAnswer) {
         isCorrect = true;
         score++;
+        isCorrectId.innerHTML = "Correct!";
     }
     else {
         isCorrect = false;
+        isCorrectId.innerHTML = "Incorrect!";
     }
     console.log(isCorrect);
 }

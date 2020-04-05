@@ -13,25 +13,27 @@
             <h3 class="text-center">Answer Kevin's questionnaire to get a high score!</h3>
         </div>
 
-        <div class="row">
-            <div class="col-6">
-                <h6 align="left">High score: <span id=high-score>0</span></h6>
+        <div class="container" style="margin: 20px;">
+            <div class="row">
+                <div class="col-6">
+                    <h6 align="left">High score: <span id=high-score>0</span></h6>
+                </div>
+                <div class="col-6">
+                    <h6 align="center">My score: <span id=current-score>0</span></h6>
+                </div>
             </div>
-            <div class="col-6">
-                <h6 align="center">My score: <span id=current-score>0</span></h6>
+
+            <h4 id="question-display"></h4>
+
+            <div>
+                <button id="choice-1" class="choice btn-lg btn-dark col-md-2"></button>
+                <button id="choice-2" class="choice btn-lg btn-dark col-md-2"></button>
+                <button id="choice-3" class="choice btn-lg btn-dark col-md-2"></button>
+                <button id="choice-4" class="choice btn-lg btn-dark col-md-2"></button>
             </div>
+            
+            <h5 id="is-correct"></h5>
         </div>
-
-        <h4 id="question-display"></h4>
-
-        <div>
-            <button id="choice-1" class="choice btn-lg btn-dark col-sm-2"></button>
-            <button id="choice-2" class="choice btn-lg btn-dark col-sm-2"></button>
-            <button id="choice-3" class="choice btn-lg btn-dark col-sm-2"></button>
-            <button id="choice-4" class="choice btn-lg btn-dark col-sm-2"></button>
-        </div>
-        
-        <h5 id="right-or-wrong"></h5>
 
         <script type="text/javascript" src="script.js"></script>
     </body>
