@@ -1,4 +1,5 @@
 var score = 0;
+var highScore = 0;
 var questionNum = 0;
 var numChoices = 4;
 var userChoice, correctChoice, isCorrect;
@@ -12,7 +13,7 @@ console.log(questionScreen);
 var allChoiceButtons = document.getElementsByClassName("choice");
 
 // Grab high score
-var highScore = parseInt(document.getElementById("high-score"));
+var highScoreId = parseInt(document.getElementById("high-score"));
 
 // Grab user score
 var userScore = document.getElementById("current-score");
@@ -21,7 +22,7 @@ var userScore = document.getElementById("current-score");
 var isCorrectId = document.getElementById("is-correct");
 
 var questionSet = [{q: "How many megabytes (MB) are in a gigabyte (GB)?", c: ["1024", "0", "2048", "64"], a: "1024"},
-                   {q: "What characters surround a string in Javascript?", c: ["Single quotation marks", "Triple quotation marks", "No quotation marks", "Double quotation marks"], a: "Double quotation marks"},
+                   {q: "What characters surround a string in Javascript?", c: ["Hashtags", "Triple quotation marks", "No quotation marks", "Double quotation marks"], a: "Double quotation marks"},
                    {q: "When does Coding Boot Camp end?", c: ["Never", "Tomorrow", "June 8", "May 31"], a: "June 8"},
                    {q: "What is Kevin's favorite pet?", c: ["dog", "cat", "bird", "fish"], a: "cat"}];
 
@@ -33,8 +34,16 @@ for(var i = 0; i < allChoiceButtons.length; i++) {
 
         clearQuiz();
         questionNum++;
-        if(questionNum === questionSet.length) {
+        console.log("Question counter: " + questionNum);
+        if(questionNum === questionSet.length - 1) {
+            if(score > highScore) {
+                highScore = score;
+            }
             window.location.replace("./score-sheet.html");
+            userScore.innerHTML(score);
+            console.log("Final score: " + userScore.innerHTML);
+            highScoreId.innerHTML(highScore);
+            console.log("New high score: " + highScoreId.innerHTML);
         }
         else {
             renderQuiz();
@@ -43,19 +52,20 @@ for(var i = 0; i < allChoiceButtons.length; i++) {
 }
 
 function renderQuiz() {
+    // Render score
+    userScore.innerHTML = score;
+    console.log("Score: " + userScore.innerHTML);
+
     // Render current question
     questionScreen.innerHTML = (questionNum + 1) + ". " + questionSet[questionNum].q;
-    console.log(questionSet[questionNum].q);
-
-    userScore.innerHTML = score;
-    console.log(userScore.innerHTML);
+    console.log("Q" + (questionNum + 1) + ": " + questionSet[questionNum].q);
 
     correctAnswer = questionSet[questionNum].a;
 
     // Render current choices
     for(var i = 0; i < questionSet[0].c.length; i++) {
         allChoiceButtons[i].innerHTML = questionSet[questionNum].c[i];
-        console.log(allChoiceButtons[i].text);
+        console.log("Choice " + 1 + ": " + allChoiceButtons[i].innerHTML);
     }
 
     if(isCorrectId.innerHTML !== "") {
@@ -66,8 +76,6 @@ function renderQuiz() {
 function clearQuiz() {
     // Clear question screen for the next question
     questionScreen.innerHTML = "";
-    //questionScreen.append(questionScreen.text);
-    questionScreen.append(questionScreen.innerHTML);
 
     // Clear choices for the next choices
     for(var i = 0; i < questionSet[0].c.length; i++) {
@@ -80,7 +88,7 @@ function clearQuiz() {
 }
 
 function compareAnswer(choice, correctAnswer) {
-    console.log(choice + ", " + correctAnswer);
+    console.log("User: " + choice + ", Correct: " + correctAnswer);
     if(choice === correctAnswer) {
         isCorrect = true;
         score++;
@@ -98,7 +106,3 @@ function viewScore() {
 }
 
 renderQuiz();
-//clearQuiz();
-//renderQuiz(questionSet[1]);
-//clearQuiz();
-//renderQuiz(questionSet[2]);
